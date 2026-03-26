@@ -1,56 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>Birthday Blitz Poll</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #f7f7f7;
-      padding: 50px;
-    }
-    h2 {
-      color: #333;
-    }
-    .poll-option {
-      display: inline-block;
-      margin: 20px;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .poll-option:hover {
-      transform: scale(1.05);
-      box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
-    }
-    .poll-option img {
-      width: 200px;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 10px;
-      border: 2px solid #ccc;
-    }
-    .poll-option label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-    button {
-      margin-top: 30px;
-      padding: 10px 20px;
-      font-size: 18px;
-      cursor: pointer;
-    }
+    /* Basic styling for the poll */
+    body { font-family: Arial; text-align: center; padding: 40px; background: #f7f7f7; }
+    .poll-option { display: inline-block; margin: 20px; cursor: pointer; }
+    .poll-option img { width: 200px; height: 200px; border-radius: 10px; }
+    .poll-option label { display: block; margin-top: 10px; font-weight: bold; }
+    button { margin-top: 30px; padding: 10px 20px; font-size: 18px; }
   </style>
 </head>
 <body>
 
-<h2>Vote for the top Birthday present!</h2>
+<h2>Vote for your favorite Birthday present!</h2>
 
 <form id="pollForm">
   <div class="poll-option">
     <input type="radio" id="option1" name="poll" value="1">
     <label for="option1">
-      <img src="https://via.placeholder.com/200" alt="Option 1">
+      <img src="IMAGE_URL_1" alt="Option 1">
       Option 1
     </label>
   </div>
@@ -58,7 +28,7 @@
   <div class="poll-option">
     <input type="radio" id="option2" name="poll" value="2">
     <label for="option2">
-      <img src="https://via.placeholder.com/200" alt="Option 2">
+      <img src="IMAGE_URL_2" alt="Option 2">
       Option 2
     </label>
   </div>
@@ -66,7 +36,7 @@
   <div class="poll-option">
     <input type="radio" id="option3" name="poll" value="3">
     <label for="option3">
-      <img src="https://via.placeholder.com/200" alt="Option 3">
+      <img src="IMAGE_URL_3" alt="Option 3">
       Option 3
     </label>
   </div>
@@ -74,6 +44,62 @@
   <br>
   <button type="submit">Vote</button>
 </form>
+
+<h3>Results:</h3>
+<div id="results"></div>
+
+<!-- 1️⃣ Firebase Config and Initialization -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getFirestore, doc, getDoc, runTransaction, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+  // Your Firebase config goes here
+  const firebaseConfig = {
+    apiKey: "AIzaSyAkgrH8-Q6kxsKAf38iZwnHsUfmBlOrz6E",
+    authDomain: "birthday-backend-c1a72.firebaseapp.com",
+    projectId: "birthday-backend-c1a72",
+    storageBucket: "birthday-backend-c1a72.firebasestorage.app",
+    messagingSenderId: "547728504413",
+    appId: "1:547728504413:web:32c97b5624eacf1f6c3fb4",
+    measurementId: "G-809TGWJ5QP"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // 2️⃣ Poll JS
+  const pollForm = document.getElementById('pollForm');
+  pollForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const selected = document.querySelector('input[name="poll"]:checked');
+    if (!selected) { alert("Pick an option!"); return; }
+
+    const voteRef = doc(db, "votes", selected.value);
+    await runTransaction(db, async (transaction) => {
+      const voteDoc = await transaction.get(voteRef);
+      if (!voteDoc.exists()) {
+        transaction.set(voteRef, { count: 1 });
+      } else {
+        transaction.update(voteRef, { count: voteDoc.data().count + 1 });
+      }
+    });
+
+    showResults();
+  });
+
+  async function showResults() {
+    const snapshot = await getDocs(collection(db, "votes"));
+    let resultsHTML = "";
+    snapshot.forEach(doc => {
+      resultsHTML += `Option ${doc.id}: ${doc.data().count} votes<br>`;
+    });
+    document.getElementById('results').innerHTML = resultsHTML;
+  }
+
+  // Display live results on page load
+  showResults();
+</script>
 
 </body>
 </html>
