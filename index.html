@@ -1,28 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Image Poll</title>
+  <title>Birthday Blitz Poll</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f7f7f7;
+      padding: 50px;
+    }
+    h2 {
+      color: #333;
+    }
+    .poll-option {
+      display: inline-block;
+      margin: 20px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .poll-option:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+    }
+    .poll-option img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+    }
+    .poll-option label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-<h2>Vote for your favorite:</h2>
+<h2>Vote for the top Birthday present!</h2>
 
-<form>
-  <label>
-    <input type="radio" name="poll">
-    <a href="https://example.com/item1" target="_blank">
-      <img src="https://via.placeholder.com/150" width="150">
-    </a>
-  </label>
+<form id="pollForm">
+  <div class="poll-option">
+    <input type="radio" id="option1" name="poll" value="1">
+    <label for="option1">
+      <img src="https://via.placeholder.com/200" alt="Option 1">
+      Option 1
+    </label>
+  </div>
 
-  <label>
-    <input type="radio" name="poll">
-    <a href="https://example.com/item2" target="_blank">
-      <img src="https://via.placeholder.com/150" width="150">
-    </a>
-  </label>
+  <div class="poll-option">
+    <input type="radio" id="option2" name="poll" value="2">
+    <label for="option2">
+      <img src="https://via.placeholder.com/200" alt="Option 2">
+      Option 2
+    </label>
+  </div>
 
-  <br><br>
+  <div class="poll-option">
+    <input type="radio" id="option3" name="poll" value="3">
+    <label for="option3">
+      <img src="https://via.placeholder.com/200" alt="Option 3">
+      Option 3
+    </label>
+  </div>
+
+  <br>
   <button type="submit">Vote</button>
 </form>
 
