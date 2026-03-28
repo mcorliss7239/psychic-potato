@@ -73,6 +73,31 @@
     .team-results:nth-child(2) {
       border-top: 5px solid #2196F3; /* Team L */
     }
+    .team-button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.8s;
+      user-select: none;
+    }
+    
+    .team-button input {
+      display: none; /* hide default radio */
+    }
+    
+    .team-button:hover {
+      transform: scale(1.1);
+      opacity: 0.9;
+    }
+    
+    .team-button input:checked + span,
+    .team-button input:checked ~ label {
+      /* optional: could add a special effect when selected */
+    }
   </style>
 </head>
   
@@ -80,11 +105,18 @@
 
 <div class="container">
 
-  <h2>Vote for your favorite Birthday present!</h2>
-    
-  <h3>Select Team:</h3>
-  <label><input type="radio" name="team" value="G" checked> Team Grayson</label>
-  <label><input type="radio" name="team" value="L"> Team Lennox</label>
+  <h2 style="font-family: 'Comic Sans MS', cursive, sans-serif; color: #ff5722;">🎉 Birthday Blitz Poll! 🎉</h2>
+
+  <div id="teamSelection">
+    <label class="team-button" style="background-color: #4CAF50;">
+      <input type="radio" name="team" value="G" checked>
+      Team Grayson
+    </label>
+    <label class="team-button" style="background-color: #2196F3;">
+      <input type="radio" name="team" value="L">
+      Team Lennox
+    </label>
+  </div>
     
   <form id="pollForm">
     <div class="poll-option">
