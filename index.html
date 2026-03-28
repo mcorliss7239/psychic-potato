@@ -144,7 +144,7 @@
     <br>
     <button type="submit">Vote</button>
     <br>
-    <button type="button" onclick="resetVotes()" style="background:#f44336;">
+    <button type="button" onclick="resetVotes()" style="background:#f44336; color:white; padding:10px 20px; border:none; border-radius:5px;">
       Reset Votes
     </button>
   </form>
@@ -186,34 +186,34 @@
   const db = getFirestore(app);
 
 // --- Auto-initialize votes for Teams G and L with 6 options ---
-const options = [1, 2, 3, 4, 5, 6];
-const teams = ['G', 'L'];
-
-teams.forEach(async team => {
-  options.forEach(async option => {
-    const docRef = doc(db, 'votes', `${team}_${option}`);
-    const docSnap = await getDoc(docRef);
-    if (!docSnap.exists()) {
-      await setDoc(docRef, { count: 0 });
-    }
-  });
-});
-
-    async function resetVotes() {
-    if (!confirm("Are you sure you want to reset all votes?")) return;
+  const options = [1, 2, 3, 4, 5, 6];
+  const teams = ['G', 'L'];
   
-    const options = [1,2,3,4,5,6];
-    const teams = ['G','L'];
-  
-    for (let team of teams) {
-      for (let option of options) {
-        const ref = doc(db, "votes", `${team}_${option}`);
-        await setDoc(ref, { count: 0 });
+  teams.forEach(async team => {
+    options.forEach(async option => {
+      const docRef = doc(db, 'votes', `${team}_${option}`);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+        await setDoc(docRef, { count: 0 });
       }
-    }
-  
-    showResults();
-  }
+    });
+  });
+
+    window.resetVotes = async function() {
+      if (!confirm("Are you sure you want to reset all votes?")) return;
+    
+      const options = [1,2,3,4,5,6];
+      const teams = ['G','L'];
+    
+      for (let team of teams) {
+        for (let option of options) {
+          const ref = doc(db, "votes", `${team}_${option}`);
+          await setDoc(ref, { count: 0 });
+        }
+      }
+    
+      showResults();  // refresh the bar chart
+    };
   // 2️⃣ Poll JS
   const pollForm = document.getElementById('pollForm');
   pollForm.addEventListener('submit', async (e) => {
