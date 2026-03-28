@@ -12,9 +12,19 @@
       padding: 40px;
       background: linear-gradient(135deg, #89f7fe, #66a6ff);
     }
-    .poll-option { display: inline-block; margin: 20px; cursor: pointer; }
-    .poll-option img { width: 200px; height: 200px; border-radius: 10px; }
-    .poll-option label { display: block; margin-top: 10px; font-weight: bold; }
+    .poll-option {
+      display: inline-block;
+      margin: 20px;
+      cursor: pointer;
+      border: 3px solid transparent;
+      border-radius: 10px;
+      transition: transform 0.2s, border 0.2s;
+    }
+    
+    .poll-option.selected {
+      border: 3px solid #ff9800; /* orange highlight for selected */
+      transform: scale(1.05);
+    }
     button { margin-top: 30px; padding: 10px 20px; font-size: 18px; }
     .bar-container {
       background: #ddd;
@@ -119,58 +129,58 @@
   </div>
     
   <form id="pollForm">
-    <div class="poll-option">
-      <input type="radio" id="option1" name="poll" value="1">
-      <label for="option1">
-        <img src="https://d34mvw1if3ud0g.cloudfront.net/35210/Skoolzy-Peg-Board-Set_20250418-044501_full.jpeg" alt="Option 1">
-        <br>
-        <a href="https://www.amazon.com/Skoolzy-Peg-Board-Set-Occupational/dp/B00W8FVMNO?tag=thewire06-20&linkCode=xm2&ascsubtag=F0401KHVY1VT734VGZWS31GDJ4674&th=1" target="_blank">Skoolzy’s Peg Board Set</a>
-      </label>
+    <div class="poll-option" data-value="1">
+      <img src="https://d34mvw1if3ud0g.cloudfront.net/35210/Skoolzy-Peg-Board-Set_20250418-044501_full.jpeg" alt="Option 1">
+      <div class="option-title">
+        <a href="https://www.amazon.com/Skoolzy-Peg-Board-Set-Occupational/dp/B00W8FVMNO?tag=thewire06-20" target="_blank">
+          Skoolzy’s Peg Board Set
+        </a>
+      </div>
     </div>
   
-    <div class="poll-option">
-      <input type="radio" id="option2" name="poll" value="2">
-      <label for="option2">
-        <img src="https://cdn.thewirecutter.com/wp-content/media/2023/12/giftsfor2yearolds-2048px-stackingrobots.jpg?width=1456&quality=60&crop=2048:1366&auto=webp" alt="Option 2">
-        <br>
-        <a href="https://www.walmart.com/ip/Schylling-Wooden-Stacking-Robot-Figures/50563176?clickid=zs1ymM2oLxyZTvsX12zQ6WBlUkuwNuwBo0EJXI0&irgwc=1&afsrc=1&sourceid=imp_zs1ymM2oLxyZTvsX12zQ6WBlUkuwNuwBo0EJXI0&veh=aff&wmlspartner=imp_197432&affiliates_ad_id=565706&campaign_id=9383&sharedid=" target="_blank">Schylling’s Wooden Stacking Robots</a>
-      </label>
+    <div class="poll-option" data-value="2">
+      <img src="https://cdn.thewirecutter.com/wp-content/media/2023/12/giftsfor2yearolds-2048px-stackingrobots.jpg?width=1456&quality=60&crop=2048:1366&auto=webp" alt="Stacking Robots">
+      <div class="option-title">
+        <a href="https://www.walmart.com/ip/Schylling-Wooden-Stacking-Robot-Figures/50563176" target="_blank">
+          Schylling’s Wooden Stacking Robots
+        </a>
+      </div>
     </div>
   
-    <div class="poll-option">
-      <input type="radio" id="option3" name="poll" value="3">
-      <label for="option3">
-        <img src="https://cdn.thewirecutter.com/wp-content/media/2023/12/giftsfor2yearolds-2048px-dumptruck.jpg?width=1456&quality=60&crop=2048:1365&auto=webp" alt="Option 3">
-        <br>
-        <a href="https://www.amazon.com/Green-Toys-Dump-Truck-Yellow/dp/B001Q3KU9Q?tag=thewire06-20&linkCode=xm2&ascsubtag=F0401KHWJ0SBFP3GAJKRB365NC85P&th=1" target="_blank">Green Toys Dump Truck</a>
-      </label>
+    <div class="poll-option" data-value="3">
+      <img src="https://cdn.thewirecutter.com/wp-content/media/2023/12/giftsfor2yearolds-2048px-dumptruck.jpg?width=1456&quality=60&crop=2048:1365&auto=webp" alt="Green Toys Dump Truck">
+      <div class="option-title">
+        <a href="https://www.amazon.com/Green-Toys-Dump-Truck-Yellow/dp/B001Q3KU9Q?tag=thewire06-20" target="_blank">
+          Green Toys Dump Truck
+        </a>
+      </div>
     </div>
   
-    <div class="poll-option">
-      <input type="radio" id="option4" name="poll" value="4">
-      <label for="option4">
-        <img src="https://m.media-amazon.com/images/I/714NIH2CVFL._AC_SL1500_.jpg" alt="Option 4">
-        <br>
-        <a href="https://www.amazon.com/dp/B074L8RV1F/?tag=thewire06-20&linkCode=xm2&ascsubtag=F0401KHVZ7Q5V7D2X0DC6WKX1W74F" target="_blank">Melissa & Doug Pet Vet Play Set</a>
-      </label>
+    <div class="poll-option" data-value="4">
+      <img src="https://m.media-amazon.com/images/I/714NIH2CVFL._AC_SL1500_.jpg" alt="Melissa & Doug Pet Vet Play Set">
+      <div class="option-title">
+        <a href="https://www.amazon.com/dp/B074L8RV1F/?tag=thewire06-20" target="_blank">
+          Melissa & Doug Pet Vet Play Set
+        </a>
+      </div>
     </div>
   
-    <div class="poll-option">
-      <input type="radio" id="option5" name="poll" value="5">
-      <label for="option5">
-        <img src="https://www.lego.com/cdn/cs/set/assets/blte17039c195e043cb/10427_Box1_v39.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5" alt="Option 5">
-        <br>
-        <a href="https://www.lego.com/en-us/product/interactive-adventure-train-10427" target="_blank">DUPLO Interactive Adventure Train</a>
-      </label>
+    <div class="poll-option" data-value="5">
+      <img src="https://www.lego.com/cdn/cs/set/assets/blte17039c195e043cb/10427_Box1_v39.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5" alt="DUPLO Interactive Adventure Train">
+      <div class="option-title">
+        <a href="https://www.lego.com/en-us/product/interactive-adventure-train-10427" target="_blank">
+          DUPLO Interactive Adventure Train
+        </a>
+      </div>
     </div>
   
-    <div class="poll-option">
-      <input type="radio" id="option6" name="poll" value="6">
-      <label for="option6">
-        <img src="https://cdn.thewirecutter.com/wp-content/media/2022/11/kidsgiftguide-2048px-playandexplorerocket.jpg?width=1456&quality=60&crop=2048:2048&auto=webp" alt="Option 6">
-        <br>
-        <a href="https://www.lakeshorelearning.com/products/dramatic-play/cars-trucks-trains/play-explore-rocket/p/PP779/" target="_blank">Lakeshore Play & Explore Rocket</a>
-      </label>
+    <div class="poll-option" data-value="6">
+      <img src="https://cdn.thewirecutter.com/wp-content/media/2022/11/kidsgiftguide-2048px-playandexplorerocket.jpg?width=1456&quality=60&crop=2048:2048&auto=webp" alt="Lakeshore Play & Explore Rocket">
+      <div class="option-title">
+        <a href="https://www.lakeshorelearning.com/products/dramatic-play/cars-trucks-trains/play-explore-rocket/p/PP779/" target="_blank">
+          Lakeshore Play & Explore Rocket
+        </a>
+      </div>
     </div>
   
     <br>
@@ -247,23 +257,46 @@
       showResults();  // refresh the bar chart
     };
   // 2️⃣ Poll JS
+  const pollOptions = document.querySelectorAll('.poll-option');
+    
+  pollOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      option.classList.toggle('selected'); // toggle selection
+    });
+  });
+
+  // ✅ Make links clickable without toggling selection
+  document.querySelectorAll('.option-title a').forEach(link => {
+    link.addEventListener('click', e => e.stopPropagation());
+  });
+  
   const pollForm = document.getElementById('pollForm');
   pollForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const selected = document.querySelector('input[name="poll"]:checked');
-    if (!selected) { alert("Pick an option!"); return; }
-
+    
+    const selectedOptions = Array.from(document.querySelectorAll('.poll-option.selected'));
+    if (selectedOptions.length === 0) {
+      alert("Pick at least one option!");
+      return;
+    }
+  
     const selectedTeam = document.querySelector('input[name="team"]:checked').value;
-    const voteRef = doc(db, "votes", `${selectedTeam}_${selected.value}`);
-    await runTransaction(db, async (transaction) => {
-      const voteDoc = await transaction.get(voteRef);
-      if (!voteDoc.exists()) {
-        transaction.set(voteRef, { count: 1 });
-      } else {
-        transaction.update(voteRef, { count: voteDoc.data().count + 1 });
-      }
-    });
-
+  
+    for (let optionDiv of selectedOptions) {
+      const voteRef = doc(db, "votes", `${selectedTeam}_${optionDiv.dataset.value}`);
+      await runTransaction(db, async (transaction) => {
+        const voteDoc = await transaction.get(voteRef);
+        if (!voteDoc.exists()) {
+          transaction.set(voteRef, { count: 1 });
+        } else {
+          transaction.update(voteRef, { count: voteDoc.data().count + 1 });
+        }
+      });
+  
+      // Optional: unselect after voting
+      optionDiv.classList.remove('selected');
+    }
+  
     showResults();
   });
 
