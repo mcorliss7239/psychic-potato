@@ -22,8 +22,17 @@
     }
     
     .poll-option.selected {
-      border: 3px solid #ff9800; /* orange highlight for selected */
-      transform: scale(1.05);
+      outline: 5px solid; /* bold orange outline */
+      outline-offset: -5px;        /* pulls outline slightly inside */
+      transform: scale(1.05);      /* subtle pop effect */
+    }
+    .poll-option img {
+      width: 200px;          /* set a fixed width */
+      height: auto;          /* preserve aspect ratio */
+      border-radius: 10px;   /* optional: rounded corners */
+      display: block;        /* avoid inline spacing issues */
+      margin: 0 auto 10px;   /* center image and add spacing below */
+      object-fit: contain;   /* make sure the image scales nicely */
     }
     button { margin-top: 30px; padding: 10px 20px; font-size: 18px; }
     .bar-container {
@@ -261,7 +270,18 @@
     
   pollOptions.forEach(option => {
     option.addEventListener('click', () => {
-      option.classList.toggle('selected'); // toggle selection
+      const selectedTeam = document.querySelector('input[name="team"]:checked').value;
+      const teamColor = selectedTeam === 'G' ? '#4CAF50' : '#2196F3'; // green for G, blue for L
+  
+      // toggle selection
+      option.classList.toggle('selected');
+  
+      // dynamically set outline color
+      if(option.classList.contains('selected')){
+        option.style.outlineColor = teamColor;
+      } else {
+        option.style.outlineColor = ''; // reset if deselected
+      }
     });
   });
 
