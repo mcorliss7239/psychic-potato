@@ -81,8 +81,9 @@
       color: white;
       font-weight: bold;
       cursor: pointer;
-      transition: transform 0.2s, opacity 0.8s;
+      transition: transform 0.2s, border 0.2s;
       user-select: none;
+      border: 3px solid transparent; /* default border */
     }
     
     .team-button input {
@@ -90,11 +91,9 @@
     }
     
     .team-button input:checked + span {
-      box-shadow: 0 0 10px 3px rgba(255, 255, 0, 0.8); /* yellow glow */
-      transform: scale(1.15); /* slightly enlarge the selected button */
-    }
-    .team-button input:checked ~ label {
-      /* optional: could add a special effect when selected */
+      border: 3px solid yellow; /* bold border for selected */
+      border-radius: 8px;        /* match the button corners */
+      transform: scale(1.05);    /* subtle grow effect optional */
     }
   </style>
 </head>
