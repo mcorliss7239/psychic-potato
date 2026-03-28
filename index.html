@@ -285,11 +285,37 @@
     });
   });
 
-  // Clear selected options when switching teams
+  const teamColors = {
+    G: '#4CAF50', // Team Grayson
+    L: '#2196F3'  // Team Lennox
+  };
+  
+  // Update outlines dynamically
+  function updateSelectedColors() {
+    const selectedTeam = document.querySelector('input[name="team"]:checked').value;
+    pollOptions.forEach(option => {
+      if(option.classList.contains('selected')) {
+        option.style.borderColor = teamColors[selectedTeam];
+      }
+    });
+  }
+  
+  // Toggle selection on images
+  pollOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      option.classList.toggle('selected');
+      updateSelectedColors();
+    });
+  });
+  
+  // Clear selections and reset colors when switching teams
   const teamRadios = document.querySelectorAll('input[name="team"]');
   teamRadios.forEach(radio => {
     radio.addEventListener('change', () => {
-      pollOptions.forEach(option => option.classList.remove('selected'));
+      pollOptions.forEach(option => {
+        option.classList.remove('selected');
+        option.style.borderColor = 'transparent';
+      });
     });
   });
   
