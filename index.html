@@ -334,11 +334,15 @@
         }
       });
   
-      // Optional: unselect after voting
+      // Clear selection completely after voting
       optionDiv.classList.remove('selected');
+      optionDiv.style.borderColor = 'transparent';
     }
   
     showResults();
+    
+    // scroll to results
+    document.querySelector('.results-wrapper').scrollIntoView({ behavior: 'smooth' });
   });
 
   async function showResults() {
