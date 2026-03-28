@@ -10,6 +10,21 @@
     .poll-option img { width: 200px; height: 200px; border-radius: 10px; }
     .poll-option label { display: block; margin-top: 10px; font-weight: bold; }
     button { margin-top: 30px; padding: 10px 20px; font-size: 18px; }
+    .bar-container {
+      width: 300px;
+      background: #ddd;
+      border-radius: 5px;
+      margin: 5px auto;
+    }
+    .bar {
+      height: 20px;
+      background: #4CAF50;
+      border-radius: 5px;
+      text-align: right;
+      color: white;
+      padding-right: 5px;
+      font-size: 12px;
+    }
   </style>
 </head>
 <body>
@@ -79,8 +94,11 @@
   <button type="submit">Vote</button>
 </form>
 
-<h3>Results:</h3>
-<div id="results"></div>
+<h3>Results - Team G:</h3>
+<div id="resultsG"></div>
+
+<h3>Results - Team L:</h3>
+<div id="resultsL"></div>
 
 <!-- 1️⃣ Firebase Config and Initialization -->
 <script type="module">
@@ -138,13 +156,51 @@ teams.forEach(async team => {
   });
 
   async function showResults() {
-    const snapshot = await getDocs(collection(db, "votes"));
-    let resultsHTML = "";
-    snapshot.forEach(doc => {
-      resultsHTML += `Option ${doc.id}: ${doc.data().count} votes<br>`;
-    });
-    document.getElementById('results').innerHTML = resultsHTML;
+  const snapshot = await getDocs(collection(db, "votes"));
+
+  let results = {
+    G: {},
+    L: {}
+  };
+
+  // Gather data
+  snapshot.forEach(docSnap => {
+    const id = docSnap.id; // e.g. G_1
+    const count = docSnap.data().count;
+
+    const team = id.split('_')[0];
+    const option = id.split('_')[1];
+
+    results[team][option] = count;
+  });
+
+  // Find max for scaling bars
+  const maxVotes = Math.max(
+    ...Object.values(results.G),
+    ...Object.values(results.L),
+    1 // prevent divide by 0
+  );
+
+  // Build HTML
+  function buildBars(teamData) {
+    let html = "";
+    for (let i = 1; i <= 6; i++) {
+      const count = teamData[i] || 0;
+      const width = (count / maxVotes) * 100;
+
+      html += `
+        <div>Option ${i} (${count})</div>
+        <div class="bar-container">
+          <div class="bar" style="width: ${width}%">${count}</div>
+        </div>
+      `;
+    }
+    return html;
   }
+
+  document.getElementById('resultsG').innerHTML = buildBars(results.G);
+  document.getElementById('resultsL').innerHTML = buildBars(results.L);
+}
 
   // Display live results on page load
   showResults();
