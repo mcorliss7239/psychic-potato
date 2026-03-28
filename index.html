@@ -89,12 +89,10 @@
       display: none; /* hide default radio */
     }
     
-    .team-button:hover {
-      transform: scale(1.1);
-      opacity: 0.9;
+    .team-button input:checked + span {
+      box-shadow: 0 0 10px 3px rgba(255, 255, 0, 0.8); /* yellow glow */
+      transform: scale(1.15); /* slightly enlarge the selected button */
     }
-    
-    .team-button input:checked + span,
     .team-button input:checked ~ label {
       /* optional: could add a special effect when selected */
     }
@@ -105,16 +103,19 @@
 
 <div class="container">
 
-  <h2 style="font-family: 'Comic Sans MS', cursive, sans-serif; color: #ff5722;">🎉 Birthday Blitz Poll! 🎉</h2>
+  <h2 style="font-family: 'Comic Sans MS', cursive, sans-serif; color: #ff5722; font-size: 48px; line-height: 1.2;">
+    🎉 Birthday Blitz Poll! 🎉
+  </h2>
 
   <div id="teamSelection">
     <label class="team-button" style="background-color: #4CAF50;">
       <input type="radio" name="team" value="G" checked>
-      Team Grayson
+      <span>Team Grayson</span>
     </label>
+    
     <label class="team-button" style="background-color: #2196F3;">
       <input type="radio" name="team" value="L">
-      Team Lennox
+      <span>Team Lennox</span>
     </label>
   </div>
     
