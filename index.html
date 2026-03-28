@@ -194,7 +194,7 @@
     <br>
     <button type="submit">Vote</button>
     <br>
-    <button type="button" onclick="resetVotes()" style="background:#f44336; color:white; padding:10px 20px; border:none; border-radius:5px;">
+    <button id="resetButton" type="button" onclick="resetVotes()" style="background:#f44336; color:white; padding:10px 20px; border:none; border-radius:5px;">
       Reset Votes
     </button>
   </form>
@@ -234,6 +234,13 @@
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+
+  // 🔒 Show reset button only in admin mode
+  const isAdmin = window.location.search.includes("admin=true");
+  
+  if (!isAdmin) {
+    document.getElementById("resetButton").style.display = "none";
+  }
 
 // --- Auto-initialize votes for Teams G and L with 6 options ---
   const options = [1, 2, 3, 4, 5, 6];
