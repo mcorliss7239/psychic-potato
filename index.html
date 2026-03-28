@@ -39,6 +39,28 @@
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
+    .results-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 30px;
+      flex-wrap: wrap; /* makes it stack on small screens */
+    }
+    
+    .team-results {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      width: 320px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .team-results:nth-child(1) {
+      border-top: 5px solid #4CAF50; /* Team G */
+    }
+    
+    .team-results:nth-child(2) {
+      border-top: 5px solid #2196F3; /* Team L */
+    }
   </style>
 </head>
   
@@ -115,11 +137,19 @@
     </button>
   </form>
   
-  <h3>Results - Team Grayson:</h3>
-  <div id="resultsG"></div>
-  
-  <h3>Results - Team Lennox:</h3>
-  <div id="resultsL"></div>
+  <div class="results-wrapper">
+
+  <div class="team-results">
+    <h3>Team Grayson</h3>
+    <div id="resultsG"></div>
+  </div>
+
+  <div class="team-results">
+    <h3>Team Lennox</h3>
+    <div id="resultsL"></div>
+  </div>
+
+</div>
   
 </div>
 
