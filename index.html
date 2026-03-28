@@ -285,6 +285,14 @@
     });
   });
 
+  // Clear selected options when switching teams
+  const teamRadios = document.querySelectorAll('input[name="team"]');
+  teamRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      pollOptions.forEach(option => option.classList.remove('selected'));
+    });
+  });
+  
   // ✅ Make links clickable without toggling selection
   document.querySelectorAll('.option-title a').forEach(link => {
     link.addEventListener('click', e => e.stopPropagation());
