@@ -16,15 +16,14 @@
       display: inline-block;
       margin: 20px;
       cursor: pointer;
-      border: 3px solid transparent;
+      border: 5px solid transparent; /* default border */
       border-radius: 10px;
-      transition: transform 0.2s, border 0.2s;
+      transition: transform 0.2s, border-color 0.2s;
     }
     
     .poll-option.selected {
-      outline: 5px solid; /* bold orange outline */
-      outline-offset: -5px;        /* pulls outline slightly inside */
-      transform: scale(1.05);      /* subtle pop effect */
+      transform: scale(1.05);
+      /* border-color will be set dynamically via JS */
     }
     .poll-option img {
       width: 200px;          /* set a fixed width */
@@ -267,48 +266,26 @@
     };
   // 2️⃣ Poll JS
   const pollOptions = document.querySelectorAll('.poll-option');
-    
+  const teamColors = { G: '#4CAF50', L: '#2196F3' };
+  
+  // Click to toggle selection
   pollOptions.forEach(option => {
     option.addEventListener('click', () => {
       const selectedTeam = document.querySelector('input[name="team"]:checked').value;
-      const teamColor = selectedTeam === 'G' ? '#4CAF50' : '#2196F3'; // green for G, blue for L
   
-      // toggle selection
+      // toggle selection class
       option.classList.toggle('selected');
   
-      // dynamically set outline color
-      if(option.classList.contains('selected')){
-        option.style.outlineColor = teamColor;
-      } else {
-        option.style.outlineColor = ''; // reset if deselected
-      }
-    });
-  });
-
-  const teamColors = {
-    G: '#4CAF50', // Team Grayson
-    L: '#2196F3'  // Team Lennox
-  };
-  
-  // Update outlines dynamically
-  function updateSelectedColors() {
-    const selectedTeam = document.querySelector('input[name="team"]:checked').value;
-    pollOptions.forEach(option => {
-      if(option.classList.contains('selected')) {
+      // set border color dynamically
+      if (option.classList.contains('selected')) {
         option.style.borderColor = teamColors[selectedTeam];
+      } else {
+        option.style.borderColor = 'transparent';
       }
-    });
-  }
-  
-  // Toggle selection on images
-  pollOptions.forEach(option => {
-    option.addEventListener('click', () => {
-      option.classList.toggle('selected');
-      updateSelectedColors();
     });
   });
   
-  // Clear selections and reset colors when switching teams
+  // Reset selections when team changes
   const teamRadios = document.querySelectorAll('input[name="team"]');
   teamRadios.forEach(radio => {
     radio.addEventListener('change', () => {
@@ -319,6 +296,16 @@
     });
   });
   
+  // Update outlines dynamically
+  function updateSelectedColors() {
+    const selectedTeam = document.querySelector('input[name="team"]:checked').value;
+    pollOptions.forEach(option => {
+      if(option.classList.contains('selected')) {
+        option.style.borderColor = teamColors[selectedTeam];
+      }
+    });
+  }
+    
   // ✅ Make links clickable without toggling selection
   document.querySelectorAll('.option-title a').forEach(link => {
     link.addEventListener('click', e => e.stopPropagation());
