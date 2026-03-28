@@ -109,6 +109,10 @@
   
     <br>
     <button type="submit">Vote</button>
+    <br>
+    <button type="button" onclick="resetVotes()" style="background:#f44336;">
+      Reset Votes
+    </button>
   </form>
   
   <h3>Results - Team Grayson:</h3>
@@ -153,6 +157,21 @@ teams.forEach(async team => {
   });
 });
 
+    async function resetVotes() {
+    if (!confirm("Are you sure you want to reset all votes?")) return;
+  
+    const options = [1,2,3,4,5,6];
+    const teams = ['G','L'];
+  
+    for (let team of teams) {
+      for (let option of options) {
+        const ref = doc(db, "votes", `${team}_${option}`);
+        await setDoc(ref, { count: 0 });
+      }
+    }
+  
+    showResults();
+  }
   // 2️⃣ Poll JS
   const pollForm = document.getElementById('pollForm');
   pollForm.addEventListener('submit', async (e) => {
