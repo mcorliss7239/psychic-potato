@@ -238,48 +238,50 @@ teams.forEach(async team => {
   async function showResults() {
   const snapshot = await getDocs(collection(db, "votes"));
 
-  let results = {
-    G: {},
-    L: {}
+  // Friendly names for the options
+  const optionNames = {
+    1: "Skoolzy’s Peg Board Set",
+    2: "Schylling’s Wooden Stacking Robots",
+    3: "Green Toys Dump Truck",
+    4: "Melissa & Doug Pet Vet Play Set",
+    5: "DUPLO Interactive Adventure Train",
+    6: "Lakeshore Play & Explore Rocket"
   };
 
-  // Gather data
+  // Organize votes by team
+  let results = { G: {}, L: {} };
   snapshot.forEach(docSnap => {
-    const id = docSnap.id; // e.g. G_1
-    const count = docSnap.data().count;
-
-    const team = id.split('_')[0];
-    const option = id.split('_')[1];
-
-    results[team][option] = count;
+    const [team, option] = docSnap.id.split('_'); // e.g., "G_1"
+    results[team][option] = docSnap.data().count;
   });
 
-  // Find max for scaling bars
+  // Determine max votes for scaling
   const maxVotes = Math.max(
     ...Object.values(results.G),
     ...Object.values(results.L),
-    1 // prevent divide by 0
+    1 // prevent divide by zero
   );
 
-  // Build HTML
-  function buildBars(teamData) {
+  // Build bars for a team
+  function buildBars(teamData, team) {
     let html = "";
     for (let i = 1; i <= 6; i++) {
       const count = teamData[i] || 0;
       const width = (count / maxVotes) * 100;
 
       html += `
-        <div>Option ${i} (${count})</div>
+        <div class="option-label">${optionNames[i]} (${count})</div>
         <div class="bar-container">
-          <div class="bar" style="width: ${width}%">${count}</div>
+          <div class="bar ${team}" style="width: ${width}%"></div>
         </div>
       `;
     }
     return html;
   }
 
-  document.getElementById('resultsG').innerHTML = buildBars(results.G);
-  document.getElementById('resultsL').innerHTML = buildBars(results.L);
+  // Insert bars into the DOM
+  document.getElementById('resultsG').innerHTML = buildBars(results.G, 'G');
+  document.getElementById('resultsL').innerHTML = buildBars(results.L, 'L');
 }
 
   // Display live results on page load
