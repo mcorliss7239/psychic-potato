@@ -15,7 +15,11 @@
 <body>
 
 <h2>Vote for your favorite Birthday present!</h2>
-
+  
+<h3>Select Team:</h3>
+<label><input type="radio" name="team" value="G" checked> Team G</label>
+<label><input type="radio" name="team" value="L"> Team L</label>
+  
 <form id="pollForm">
   <div class="poll-option">
     <input type="radio" id="option1" name="poll" value="1">
@@ -27,7 +31,7 @@
   </div>
 
   <div class="poll-option">
-    <input type="radio" id="option2" name="poll" value="1">
+    <input type="radio" id="option2" name="poll" value="2">
     <label for="option2">
       <img src="https://cdn.thewirecutter.com/wp-content/media/2023/12/giftsfor2yearolds-2048px-stackingrobots.jpg?width=1456&quality=60&crop=2048:1366&auto=webp" alt="Option 2">
       <br>
@@ -36,7 +40,7 @@
   </div>
 
   <div class="poll-option">
-    <input type="radio" id="option3" name="poll" value="1">
+    <input type="radio" id="option3" name="poll" value="3">
     <label for="option3">
       <img src="https://cdn.thewirecutter.com/wp-content/media/2023/12/giftsfor2yearolds-2048px-dumptruck.jpg?width=1456&quality=60&crop=2048:1365&auto=webp" alt="Option 3">
       <br>
@@ -45,7 +49,7 @@
   </div>
 
   <div class="poll-option">
-    <input type="radio" id="option4" name="poll" value="1">
+    <input type="radio" id="option4" name="poll" value="4">
     <label for="option4">
       <img src="https://m.media-amazon.com/images/I/714NIH2CVFL._AC_SL1500_.jpg" alt="Option 4">
       <br>
@@ -54,20 +58,20 @@
   </div>
 
   <div class="poll-option">
-    <input type="radio" id="option5" name="poll" value="1">
+    <input type="radio" id="option5" name="poll" value="5">
     <label for="option5">
-      <img src="" alt="Option 5">
+      <img src="https://www.lego.com/cdn/cs/set/assets/blte17039c195e043cb/10427_Box1_v39.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5" alt="Option 5">
       <br>
-      <a href="" target="_blank">Mel</a>
+      <a href="https://www.lego.com/en-us/product/interactive-adventure-train-10427" target="_blank">DUPLO Interactive Adventure Train</a>
     </label>
   </div>
 
   <div class="poll-option">
-    <input type="radio" id="option6" name="poll" value="1">
+    <input type="radio" id="option6" name="poll" value="6">
     <label for="option6">
-      <img src="" alt="Option 6">
+      <img src="https://cdn.thewirecutter.com/wp-content/media/2022/11/kidsgiftguide-2048px-playandexplorerocket.jpg?width=1456&quality=60&crop=2048:2048&auto=webp" alt="Option 6">
       <br>
-      <a href="" target="_blank">Mel</a>
+      <a href="https://www.lakeshorelearning.com/products/dramatic-play/cars-trucks-trains/play-explore-rocket/p/PP779/" target="_blank">Lakeshore Play & Explore Rocket</a>
     </label>
   </div>
 
@@ -81,7 +85,7 @@
 <!-- 1️⃣ Firebase Config and Initialization -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-  import { getFirestore, doc, getDoc, runTransaction, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+  import { getFirestore, doc, getDoc, setDoc, runTransaction, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
   // Your Firebase config goes here
   const firebaseConfig = {
@@ -119,7 +123,8 @@ teams.forEach(async team => {
     const selected = document.querySelector('input[name="poll"]:checked');
     if (!selected) { alert("Pick an option!"); return; }
 
-    const voteRef = doc(db, "votes", selected.value);
+    const selectedTeam = document.querySelector('input[name="team"]:checked').value;
+    const voteRef = doc(db, "votes", `${selectedTeam}_${selected.value}`);
     await runTransaction(db, async (transaction) => {
       const voteDoc = await transaction.get(voteRef);
       if (!voteDoc.exists()) {
